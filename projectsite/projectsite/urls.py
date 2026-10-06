@@ -7,7 +7,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
 
-    path('', RedirectView.as_view(pattern_name='task-list', permanent=False)),
+    path('', RedirectView.as_view(pattern_name='task-list', permanent=False), name='home'),
 
     path('tasks/', views.TaskListView.as_view(), name='task-list'),
     path('tasks/create/', views.TaskCreateView.as_view(), name='task-create'),
