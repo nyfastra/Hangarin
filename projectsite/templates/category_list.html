@@ -34,7 +34,7 @@
                                 <tbody>
                                     {% for category in object_list %}
                                     <tr>
-                                        <td>{{ category.name|default:category.title }}</td>
+                                        <td>{{ category.name }}</td>
                                         <td>
                                             <a href="{% url 'category-update' category.id %}" class="text-primary mr-1">Edit</a>
                                             <a href="{% url 'category-delete' category.id %}" class="text-danger">Delete</a>

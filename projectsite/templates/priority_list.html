@@ -34,7 +34,7 @@
                                 <tbody>
                                     {% for priority in object_list %}
                                     <tr>
-                                        <td>{{ priority.name|default:priority.title }}</td>
+                                        <td>{{ priority.name }}</td>
                                         <td>
                                             <a href="{% url 'priority-update' priority.id %}" class="text-primary mr-1">Edit</a>
                                             <a href="{% url 'priority-delete' priority.id %}" class="text-danger">Delete</a>

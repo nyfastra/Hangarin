@@ -35,8 +35,8 @@
                                 <tbody>
                                     {% for note in object_list %}
                                     <tr>
-                                        <td>{{ note.title|default:note.name }}</td>
-                                        <td>{{ note.content|default:note.description }}</td>
+                                        <td>{{ note.title }}</td>
+                                        <td>{{ note.content }}</td>
                                         <td>
                                             <a href="{% url 'note-update' note.id %}" class="text-primary mr-1">Edit</a>
                                             <a href="{% url 'note-delete' note.id %}" class="text-danger">Delete</a>

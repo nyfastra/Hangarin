@@ -36,8 +36,8 @@
                                 <tbody>
                                     {% for subtask in object_list %}
                                     <tr>
-                                        <td>{{ subtask.task.title|default:subtask.task }}</td>
-                                        <td>{{ subtask.title|default:subtask.name }}</td>
+                                        <td>{{ subtask.task }}</td>
+                                        <td>{{ subtask.title }}</td>
                                         <td>{{ subtask.status }}</td>
                                         <td>
                                             <a href="{% url 'subtask-update' subtask.id %}" class="text-primary mr-1">Edit</a>
