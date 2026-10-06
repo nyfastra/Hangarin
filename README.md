@@ -11,4 +11,4 @@ Task & To-Do Manager
 
 ## Author
 
-[Nicole Ynarhosenne Faith F. Cabral] (https://github.com/nyfastra)
+[Nicole Ynarhosenne Faith F. Cabral](https://github.com/nyfastra)

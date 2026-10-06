@@ -6,7 +6,7 @@ from .models import Task, SubTask, Category, Priority, Note
 
 class TaskListView(ListView):
     model = Task
-    template_name = 'core/task_list.html'
+    template_name = 'task_list.html'
     context_object_name = 'tasks'
 
     def get_queryset(self):
@@ -24,24 +24,24 @@ class TaskListView(ListView):
 class TaskCreateView(CreateView):
     model = Task
     fields = '__all__'
-    template_name = 'core/task_form.html'
+    template_name = 'task_form.html'
     success_url = reverse_lazy('task-list')
 
 class TaskUpdateView(UpdateView):
     model = Task
     fields = '__all__'
-    template_name = 'core/task_form.html'
+    template_name = 'task_form.html'
     success_url = reverse_lazy('task-list')
 
 class TaskDeleteView(DeleteView):
     model = Task
-    template_name = 'core/task_confirm_delete.html'
+    template_name = 'task_confirm_delete.html'
     success_url = reverse_lazy('task-list')
 
 
 class SubTaskListView(ListView):
     model = SubTask
-    template_name = 'core/subtask_list.html'
+    template_name = 'subtask_list.html'
     context_object_name = 'subtasks'
 
     def get_queryset(self):
@@ -57,24 +57,24 @@ class SubTaskListView(ListView):
 class SubTaskCreateView(CreateView):
     model = SubTask
     fields = '__all__'
-    template_name = 'core/subtask_form.html'
+    template_name = 'subtask_form.html'
     success_url = reverse_lazy('subtask-list')
 
 class SubTaskUpdateView(UpdateView):
     model = SubTask
     fields = '__all__'
-    template_name = 'core/subtask_form.html'
+    template_name = 'subtask_form.html'
     success_url = reverse_lazy('subtask-list')
 
 class SubTaskDeleteView(DeleteView):
     model = SubTask
-    template_name = 'core/subtask_confirm_delete.html'
+    template_name = 'subtask_confirm_delete.html'
     success_url = reverse_lazy('subtask-list')
 
 
 class CategoryListView(ListView):
     model = Category
-    template_name = 'core/category_list.html'
+    template_name = 'category_list.html'
     context_object_name = 'categories'
 
     def get_queryset(self):
@@ -90,24 +90,24 @@ class CategoryListView(ListView):
 class CategoryCreateView(CreateView):
     model = Category
     fields = '__all__'
-    template_name = 'core/category_form.html'
+    template_name = 'category_form.html'
     success_url = reverse_lazy('category-list')
 
 class CategoryUpdateView(UpdateView):
     model = Category
     fields = '__all__'
-    template_name = 'core/category_form.html'
+    template_name = 'category_form.html'
     success_url = reverse_lazy('category-list')
 
 class CategoryDeleteView(DeleteView):
     model = Category
-    template_name = 'core/category_confirm_delete.html'
+    template_name = 'category_confirm_delete.html'
     success_url = reverse_lazy('category-list')
 
 
 class PriorityListView(ListView):
     model = Priority
-    template_name = 'core/priority_list.html'
+    template_name = 'priority_list.html'
     context_object_name = 'priorities'
 
     def get_queryset(self):
@@ -123,24 +123,24 @@ class PriorityListView(ListView):
 class PriorityCreateView(CreateView):
     model = Priority
     fields = '__all__'
-    template_name = 'core/priority_form.html'
+    template_name = 'priority_form.html'
     success_url = reverse_lazy('priority-list')
 
 class PriorityUpdateView(UpdateView):
     model = Priority
     fields = '__all__'
-    template_name = 'core/priority_form.html'
+    template_name = 'priority_form.html'
     success_url = reverse_lazy('priority-list')
 
 class PriorityDeleteView(DeleteView):
     model = Priority
-    template_name = 'core/priority_confirm_delete.html'
+    template_name = 'priority_confirm_delete.html'
     success_url = reverse_lazy('priority-list')
 
 
 class NoteListView(ListView):
     model = Note
-    template_name = 'core/note_list.html'
+    template_name = 'note_list.html'
     context_object_name = 'notes'
 
     def get_queryset(self):
@@ -156,16 +156,16 @@ class NoteListView(ListView):
 class NoteCreateView(CreateView):
     model = Note
     fields = '__all__'
-    template_name = 'core/note_form.html'
+    template_name = 'note_form.html'
     success_url = reverse_lazy('note-list')
 
 class NoteUpdateView(UpdateView):
     model = Note
     fields = '__all__'
-    template_name = 'core/note_form.html'
+    template_name = 'note_form.html'
     success_url = reverse_lazy('note-list')
 
 class NoteDeleteView(DeleteView):
     model = Note
-    template_name = 'core/note_confirm_delete.html'
+    template_name = 'note_confirm_delete.html'
     success_url = reverse_lazy('note-list')
