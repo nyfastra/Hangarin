@@ -1,7 +1,10 @@
 from django.urls import path
+from django.views.generic import RedirectView
 from . import views
 
 urlpatterns = [
+    path('', RedirectView.as_view(pattern_name='task-list', permanent=False)),
+
     path('tasks/', views.TaskListView.as_view(), name='task-list'),
     path('tasks/create/', views.TaskCreateView.as_view(), name='task-create'),
     path('tasks/<int:pk>/update/', views.TaskUpdateView.as_view(), name='task-update'),
