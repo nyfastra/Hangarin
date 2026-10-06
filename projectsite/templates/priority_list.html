@@ -1,30 +1,69 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h2>Priorities</h2>
+    <div class="content">
+        <div class="container-fluid">
+            <h4 class="page-title">Priorities</h4>
 
-<form method="get" style="display: flex; gap: 10px; margin-bottom: 15px;">
-    <input type="text" name="q" placeholder="Search priorities..." value="{{ request.GET.q }}">
-    <select name="sort" onchange="this.form.submit()">
-        <option value="">-- Sort By --</option>
-        <option value="name" {% if request.GET.sort == 'name' %}selected{% endif %}>Name (A-Z)</option>
-        <option value="-name" {% if request.GET.sort == '-name' %}selected{% endif %}>Name (Z-A)</option>
-    </select>
-    <button type="submit" class="btn">Filter</button>
-</form>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">List of Priorities</div>
+                            <div class="card-category">Page Subtitle</div>
+                        </div>
+                        <br />
+                        <div class="col-md-12 row">
+                            <div class="col-md-6">
+                                <form class="navbar-left navbar-form nav-search mr-md-3" action="{% url 'priority-list' %}">
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Search ..." class="form-control" name="q" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="la la-search search-icon"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="pull-right">
+                                    <a href="{% url 'priority-add' %}" class="btn btn-success btn-rounded">Add Priority</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped mt-3">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
 
-<a href="{% url 'priority-create' %}" class="btn">+ Add Priority</a>
-<table>
-    <tr><th>Name</th><th>Actions</th></tr>
-    {% for priority in priorities %}
-    <tr>
-        <td>{{ priority.name }}</td>
-        <td>
-            <a href="{% url 'priority-update' priority.pk %}">Edit</a> |
-            <a href="{% url 'priority-delete' priority.pk %}">Delete</a>
-        </td>
-    </tr>
-    {% empty %}
-    <tr><td colspan="2">No priorities found.</td></tr>
-    {% endfor %}
-</table>
+                                <tbody>
+                                    {% for object in object_list %}
+                                        <tr>
+                                            <td>{{ object.name }}</td>
+                                            <td>
+                                                <a href="{% url 'priority-update' object.id %}">Edit</a>
+                                                <a href="{% url 'priority-delete' object.id %}" class="text-danger">Delete</a>
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="7" style="text-align: center">
+                                                <p class="text-sm font-weight-bold mb-0">No Priorities Found.</p>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% include 'includes/pagination.html' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

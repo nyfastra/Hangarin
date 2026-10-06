@@ -1,31 +1,71 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h2>Notes</h2>
+    <div class="content">
+        <div class="container-fluid">
+            <h4 class="page-title">Notes</h4>
 
-<form method="get" style="display: flex; gap: 10px; margin-bottom: 15px;">
-    <input type="text" name="q" placeholder="Search notes..." value="{{ request.GET.q }}">
-    <select name="sort" onchange="this.form.submit()">
-        <option value="">-- Sort By --</option>
-        <option value="content" {% if request.GET.sort == 'content' %}selected{% endif %}>Content (A-Z)</option>
-        <option value="-content" {% if request.GET.sort == '-content' %}selected{% endif %}>Content (Z-A)</option>
-    </select>
-    <button type="submit" class="btn">Filter</button>
-</form>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">List of Notes</div>
+                            <div class="card-category">Page Subtitle</div>
+                        </div>
+                        <br />
+                        <div class="col-md-12 row">
+                            <div class="col-md-6">
+                                <form class="navbar-left navbar-form nav-search mr-md-3" action="{% url 'note-list' %}">
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Search ..." class="form-control" name="q" />
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="la la-search search-icon"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="pull-right">
+                                    <a href="{% url 'note-add' %}" class="btn btn-success btn-rounded">Add Note</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped mt-3">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Task</th>
+                                        <th scope="col">Content</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
 
-<a href="{% url 'note-create' %}" class="btn">+ Add Note</a>
-<table>
-    <tr><th>Content</th><th>Task</th><th>Actions</th></tr>
-    {% for note in notes %}
-    <tr>
-        <td>{{ note.content }}</td>
-        <td>{{ note.task }}</td>
-        <td>
-            <a href="{% url 'note-update' note.pk %}">Edit</a> |
-            <a href="{% url 'note-delete' note.pk %}">Delete</a>
-        </td>
-    </tr>
-    {% empty %}
-    <tr><td colspan="3">No notes found.</td></tr>
-    {% endfor %}
-</table>
+                                <tbody>
+                                    {% for object in object_list %}
+                                        <tr>
+                                            <td>{{ object.task }}</td>
+                                            <td>{{ object.content }}</td>
+                                            <td>
+                                                <a href="{% url 'note-update' object.id %}">Edit</a>
+                                                <a href="{% url 'note-delete' object.id %}" class="text-danger">Delete</a>
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="7" style="text-align: center">
+                                                <p class="text-sm font-weight-bold mb-0">No Records Found.</p>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% include 'includes/pagination.html' %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
