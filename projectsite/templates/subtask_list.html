@@ -43,7 +43,7 @@
                         <tbody>
                             {% for object in object_list %}
                                 <tr>
-                                    <td>{{ object.task }}</td>
+                                    <td>{{ object.parent_task.title }}</td>
                                     <td>{{ object.title }}</td>
                                     <td>{{ object.get_status_display }}</td>
                                     <td>

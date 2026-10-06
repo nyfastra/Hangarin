@@ -60,13 +60,18 @@ class SubTaskListView(ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().select_related('parent_task')
+        
         query = self.request.GET.get('q')
         if query:
-            queryset = queryset.filter(Q(title__icontains=query))
+            queryset = queryset.filter(
+                Q(title__icontains=query) | Q(parent_task__title__icontains=query)
+            )
+            
         sort_by = self.request.GET.get('sort')
         if sort_by in ['title', '-title', 'status', '-status']:
             queryset = queryset.order_by(sort_by)
+            
         return queryset
 
 class SubTaskCreateView(CreateView):
