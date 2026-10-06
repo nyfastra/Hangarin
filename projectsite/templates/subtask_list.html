@@ -4,54 +4,50 @@
 {% block content %}
 <div class="content">
     <div class="container-fluid">
-        <h4 class="page-title">SubTasks</h4>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header d-flex align-items-center justify-content-between">
-                        <div>
-                            <div class="card-title">SubTask List</div>
-                            <div class="card-category">Manage subtasks</div>
-                        </div>
-                        <a href="{% url 'subtask-add' %}" class="btn btn-primary btn-rounded">
-                            <i class="la la-plus"></i> Add SubTask
-                        </a>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-head-bg-primary table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Task</th>
-                                        <th>Title</th>
-                                        <th>Status</th>
-                                        <th class="text-center">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for subtask in object_list %}
-                                    <tr>
-                                        <td>{{ subtask.task }}</td>
-                                        <td>{{ subtask.title }}</td>
-                                        <td><span class="badge badge-info">{{ subtask.status }}</span></td>
-                                        <td class="text-center">
-                                            <a href="{% url 'subtask-update' subtask.id %}" class="btn btn-link btn-primary btn-just-icon mr-1" title="Edit">
-                                                <i class="la la-edit"></i>
-                                            </a>
-                                            <a href="{% url 'subtask-delete' subtask.id %}" class="btn btn-link btn-danger btn-just-icon" title="Delete">
-                                                <i class="la la-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    {% empty %}
-                                    <tr>
-                                        <td colspan="4" class="text-center text-muted">No subtasks available.</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+        <h4 class="page-title">List of SubTasks</h4>
+        <div class="page-subtitle text-muted mb-4">Page Subtitle</div>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="form-group p-0 m-0" style="max-width: 350px; width: 100%;">
+                <div class="input-group">
+                    <input type="text" class="form-control rounded-pill bg-light border-0" placeholder="Search ...">
+                </div>
+            </div>
+            <a href="{% url 'subtask-add' %}" class="btn btn-success btn-round px-4" style="border-radius: 20px;">
+                Add SubTask
+            </a>
+        </div>
+
+        <div class="card border-0 shadow-none">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="text-muted border-0">
+                                <th>Task</th>
+                                <th>Title</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for subtask in object_list %}
+                            <tr>
+                                <td>{{ subtask.task }}</td>
+                                <td>{{ subtask.title }}</td>
+                                <td>{{ subtask.status }}</td>
+                                <td>
+                                    <a href="{% url 'subtask-update' subtask.id %}" class="text-primary d-block">Edit</a>
+                                    <a href="{% url 'subtask-delete' subtask.id %}" class="text-danger d-block">Delete</a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center text-muted">No subtasks found.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
