@@ -3,9 +3,18 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Task, SubTask, Category, Priority, Note
 from django.views.generic import TemplateView
+from .models import Task
 
 class HomePageView(TemplateView):
     template_name = 'home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['total_tasks'] = Task.objects.count()
+        context['completed_tasks'] = Task.objects.filter(status='Completed').count()
+        context['pending_tasks'] = Task.objects.filter(status='Pending').count()
+        context['in_progress_tasks'] = Task.objects.filter(status='In Progress').count()
+        return context
 
 
 class TaskListView(ListView):
