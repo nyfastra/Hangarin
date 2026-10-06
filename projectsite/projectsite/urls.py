@@ -3,6 +3,7 @@ from django.urls import path, include
 from django.views.generic import RedirectView
 
 from core.views import (
+    HomePageView,
     TaskListView, TaskCreateView, TaskUpdateView, TaskDeleteView,
     NoteListView, NoteCreateView, NoteUpdateView, NoteDeleteView,
     SubTaskListView, SubTaskCreateView, SubTaskUpdateView, SubTaskDeleteView,
@@ -14,7 +15,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
 
-    path('', RedirectView.as_view(pattern_name='task-list', permanent=False), name='home'),
+    path('', HomePageView.as_view(), name='home'),
 
     path('tasks/', TaskListView.as_view(), name='task-list'),
     path('tasks/add', TaskCreateView.as_view(), name='task-add'),

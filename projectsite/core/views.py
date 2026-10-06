@@ -2,6 +2,10 @@ from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Task, SubTask, Category, Priority, Note
+from django.views.generic import TemplateView
+
+class HomePageView(TemplateView):
+    template_name = 'home.html'
 
 
 class TaskListView(ListView):
