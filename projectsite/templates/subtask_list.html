@@ -12,41 +12,52 @@
                 </div>
 
                 <div class="card-body">
-                    <!-- Unified Search, Filter, and Sort Bar -->
-                    <form method="get" action="{% url 'subtask-list' %}" class="row mb-3 align-items-center">
-                        <!-- Search Input -->
-                        <div class="col-md-4 mb-2">
-                            <div class="input-group">
-                                <input type="text" placeholder="Search title or parent task..." class="form-control" name="q" value="{{ request.GET.q }}" />
-                                <div class="input-group-append">
-                                    <span class="input-group-text">
-                                        <i class="la la-search search-icon"></i>
-                                    </span>
+                    <!-- Row 1: Rounded Search Input & Add Button -->
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-6">
+                            <form class="navbar-left navbar-form nav-search mr-md-3" action="{% url 'subtask-list' %}" method="get">
+                                <div class="input-group input-group-round">
+                                    <input type="text" placeholder="Search ..." class="form-control" name="q" value="{{ request.GET.q }}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-search search-icon"></i>
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
+                                {% if request.GET.status %}<input type="hidden" name="status" value="{{ request.GET.status }}">{% endif %}
+                                {% if request.GET.sort %}<input type="hidden" name="sort" value="{{ request.GET.sort }}">{% endif %}
+                            </form>
                         </div>
+                        <div class="col-md-6 text-right">
+                            <a href="{% url 'subtask-add' %}" class="btn btn-success btn-rounded">Add SubTask</a>
+                        </div>
+                    </div>
 
-                        <!-- Status Filter Dropdown -->
-                        <div class="col-md-3 mb-2">
-                            <select name="status" class="form-control" onchange="this.form.submit()">
-                                <option value="">All Statuses</option>
-                                <option value="Pending" {% if request.GET.status == "Pending" %}selected{% endif %}>Pending</option>
-                                <option value="In Progress" {% if request.GET.status == "In Progress" %}selected{% endif %}>In Progress</option>
-                                <option value="Completed" {% if request.GET.status == "Completed" %}selected{% endif %}>Completed</option>
-                            </select>
-                        </div>
+                    <!-- Row 2: Inline Dropdowns and Sorting -->
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <form method="get" class="form-inline">
+                                {% if request.GET.q %}<input type="hidden" name="q" value="{{ request.GET.q }}">{% endif %}
 
-                        <!-- Sort By & Action Button -->
-                        <div class="col-md-5 text-right mb-2 d-flex align-items-center justify-content-end">
-                            <select class="form-control mr-2" name="sort" onchange="this.form.submit()">
-                                <option value="">Sort by</option>
-                                <option value="title" {% if request.GET.sort == "title" %}selected{% endif %}>Title (A-Z)</option>
-                                <option value="-title" {% if request.GET.sort == "-title" %}selected{% endif %}>Title (Z-A)</option>
-                                <option value="status" {% if request.GET.sort == "status" %}selected{% endif %}>Status</option>
-                            </select>
-                            <a href="{% url 'subtask-add' %}" class="btn btn-success btn-rounded text-nowrap">Add SubTask</a>
+                                <!-- Status Dropdown -->
+                                <select class="form-control form-control-sm mr-2" name="status" onchange="this.form.submit()">
+                                    <option value="">All Statuses</option>
+                                    <option value="Pending" {% if request.GET.status == "Pending" %}selected{% endif %}>Pending</option>
+                                    <option value="In Progress" {% if request.GET.status == "In Progress" %}selected{% endif %}>In Progress</option>
+                                    <option value="Completed" {% if request.GET.status == "Completed" %}selected{% endif %}>Completed</option>
+                                </select>
+
+                                <!-- Sort Dropdown -->
+                                <label for="smallSelect" class="mr-2">Sort by</label>
+                                <select class="form-control form-control-sm mr-2" id="smallSelect" name="sort" onchange="this.form.submit()">
+                                    <option value="">Default</option>
+                                    <option value="title" {% if request.GET.sort == "title" %}selected{% endif %}>Title (A-Z)</option>
+                                    <option value="-title" {% if request.GET.sort == "-title" %}selected{% endif %}>Title (Z-A)</option>
+                                    <option value="status" {% if request.GET.sort == "status" %}selected{% endif %}>Status</option>
+                                </select>
+                            </form>
                         </div>
-                    </form>
+                    </div>
 
                     <table class="table table-striped mt-3">
                         <thead>

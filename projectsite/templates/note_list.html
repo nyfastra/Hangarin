@@ -12,33 +12,41 @@
                 </div>
 
                 <div class="card-body">
-                    <!-- Unified Search, Date Filter, and Action Bar -->
-                    <form method="get" action="{% url 'note-list' %}" class="row mb-3 align-items-center">
-                        <!-- Search Input -->
-                        <div class="col-md-4 mb-2">
-                            <div class="input-group">
-                                <input type="text" placeholder="Search note content..." class="form-control" name="q" value="{{ request.GET.q }}" />
-                                <div class="input-group-append">
-                                    <span class="input-group-text">
-                                        <i class="la la-search search-icon"></i>
-                                    </span>
+                    <!-- Row 1: Rounded Search Input & Add Button -->
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-6">
+                            <form class="navbar-left navbar-form nav-search mr-md-3" action="{% url 'note-list' %}" method="get">
+                                <div class="input-group input-group-round">
+                                    <input type="text" placeholder="Search ..." class="form-control" name="q" value="{{ request.GET.q }}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-search search-icon"></i>
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
+                                {% if request.GET.created_at %}<input type="hidden" name="created_at" value="{{ request.GET.created_at }}">{% endif %}
+                            </form>
                         </div>
+                        <div class="col-md-6 text-right">
+                            <a href="{% url 'note-add' %}" class="btn btn-success btn-rounded">Add Note</a>
+                        </div>
+                    </div>
 
-                        <!-- Date Filter Input -->
-                        <div class="col-md-3 mb-2">
-                            <input type="date" name="created_at" class="form-control" value="{{ request.GET.created_at }}" onchange="this.form.submit()" />
-                        </div>
+                    <!-- Row 2: Date Filter Input -->
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <form method="get" class="form-inline">
+                                {% if request.GET.q %}<input type="hidden" name="q" value="{{ request.GET.q }}">{% endif %}
 
-                        <!-- Clear Filter & Action Button -->
-                        <div class="col-md-5 text-right mb-2 d-flex align-items-center justify-content-end">
-                            {% if request.GET.created_at or request.GET.q %}
-                                <a href="{% url 'note-list' %}" class="btn btn-outline-secondary btn-sm mr-2 text-nowrap">Clear Filters</a>
-                            {% endif %}
-                            <a href="{% url 'note-add' %}" class="btn btn-success btn-rounded text-nowrap">Add Note</a>
+                                <label class="mr-2">Filter Date</label>
+                                <input type="date" name="created_at" class="form-control form-control-sm mr-2" value="{{ request.GET.created_at }}" onchange="this.form.submit()" />
+
+                                {% if request.GET.created_at or request.GET.q %}
+                                    <a href="{% url 'note-list' %}" class="btn btn-outline-secondary btn-sm">Clear Filters</a>
+                                {% endif %}
+                            </form>
                         </div>
-                    </form>
+                    </div>
 
                     <table class="table table-striped mt-3">
                         <thead>
