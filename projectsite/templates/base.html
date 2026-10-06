@@ -25,7 +25,6 @@
             </div>
             <nav class="navbar navbar-header navbar-expand-lg">
                 <div class="container-fluid">
-                    
                     <form class="navbar-left navbar-form nav-search mr-md-3" action="">
                         <div class="input-group">
                             <input type="text" placeholder="Search ..." class="form-control">
@@ -62,18 +61,14 @@
                                         <a href="#">
                                             <div class="notif-icon notif-primary"> <i class="la la-user-plus"></i> </div>
                                             <div class="notif-content">
-                                                <span class="block">
-                                                    New user registered
-                                                </span>
+                                                <span class="block">New user registered</span>
                                                 <span class="time">5 minutes ago</span> 
                                             </div>
                                         </a>
                                         <a href="#">
                                             <div class="notif-icon notif-success"> <i class="la la-comment"></i> </div>
                                             <div class="notif-content">
-                                                <span class="block">
-                                                    Saoirse commented on Admin
-                                                </span>
+                                                <span class="block">Saoirse commented on Admin</span>
                                                 <span class="time">12 minutes ago</span> 
                                             </div>
                                         </a>
@@ -82,18 +77,14 @@
                                                 <img src="assets/img/profile2.jpg" alt="Img Profile">
                                             </div>
                                             <div class="notif-content">
-                                                <span class="block">
-                                                    Sky send messages to you
-                                                </span>
+                                                <span class="block">Sky send messages to you</span>
                                                 <span class="time">12 minutes ago</span> 
                                             </div>
                                         </a>
                                         <a href="#">
                                             <div class="notif-icon notif-danger"> <i class="la la-heart"></i> </div>
                                             <div class="notif-content">
-                                                <span class="block">
-                                                    Secre liked Admin
-                                                </span>
+                                                <span class="block">Secre liked Admin</span>
                                                 <span class="time">17 minutes ago</span> 
                                             </div>
                                         </a>
@@ -105,7 +96,7 @@
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <!-- TOP RIGHT CORNER: Profile Pic + User Name -->
+                            <!-- TOP RIGHT CORNER -->
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
                                 {% if request.user.is_authenticated and request.user.socialaccount_set.all %}
                                     {% get_social_accounts request.user as accounts %}
@@ -116,14 +107,12 @@
                                     {% else %}
                                         <img src="{% static 'img/nero.jpg' %}" alt="user-img" width="36" height="36" class="img-circle">
                                     {% endif %}
+                                    <span class="d-none d-md-inline-block ml-2 fw-bold">
+                                        {{ request.user.get_full_name|default:request.user.first_name|default:request.user.username }}
+                                    </span>
                                 {% else %}
                                     <img src="{% static 'img/nero.jpg' %}" alt="user-img" width="36" height="36" class="img-circle">
                                 {% endif %}
-                                <span class="d-none d-md-inline-block ml-2 fw-bold">
-                                    {% if request.user.is_authenticated %}
-                                        {{ request.user.get_full_name|default:request.user.first_name|default:request.user.username }}
-                                    {% endif %}
-                                </span>
                             </a>
                             <ul class="dropdown-menu dropdown-user animated fadeIn">
                                 <div class="dropdown-user-scroll scrollbar-outer">
@@ -144,20 +133,13 @@
                                                 {% endif %}
                                             </div>
                                             <div class="u-text">
-                                                <h4>
-                                                    {% if request.user.is_authenticated %}
-                                                        {{ request.user.get_full_name|default:request.user.first_name|default:request.user.username }}
-                                                    {% else %}
-                                                        Hizrian
-                                                    {% endif %}
-                                                </h4>
-                                                <p class="text-muted">
-                                                    {% if request.user.is_authenticated %}
-                                                        {{ request.user.email }}
-                                                    {% else %}
-                                                        hello@themekita.com
-                                                    {% endif %}
-                                                </p>
+                                                {% if request.user.is_authenticated %}
+                                                    <h4>{{ request.user.get_full_name|default:request.user.first_name|default:request.user.username }}</h4>
+                                                    <p class="text-muted">{{ request.user.email }}</p>
+                                                {% else %}
+                                                    <h4>Hizrian</h4>
+                                                    <p class="text-muted">hello@themekita.com</p>
+                                                {% endif %}
                                                 <a href="#" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
                                             </div>
                                         </div>
@@ -172,8 +154,7 @@
                                     {% if request.user.is_authenticated %}
                                         <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
                                     {% else %}
-                                        <!-- DIRECT GITHUB OAUTH LOGIN LINK -->
-                                        <a class="dropdown-item" href="{% provider_login_url 'github' process='login' %}">Login with GitHub</a>
+                                        <a class="dropdown-item" href="{% url 'account_login' %}">Login</a>
                                     {% endif %}
                                 </div>
                             </ul>
@@ -206,16 +187,11 @@
                             <span>
                                 {% if request.user.is_authenticated %}
                                     {{ request.user.get_full_name|default:request.user.first_name|default:request.user.username }}
+                                    <span class="user-level">User</span>
                                 {% else %}
                                     Administrator
+                                    <span class="user-level">Administrator</span>
                                 {% endif %}
-                                <span class="user-level">
-                                    {% if request.user.is_authenticated %}
-                                        User
-                                    {% else %}
-                                        Administrator
-                                    {% endif %}
-                                </span>
                                 <span class="caret"></span>
                             </span>
                         </a>
@@ -224,19 +200,13 @@
                         <div class="collapse in" id="collapseExample" aria-expanded="true">
                             <ul class="nav">
                                 <li>
-                                    <a href="#profile">
-                                        <span class="link-collapse">My Profile</span>
-                                    </a>
+                                    <a href="#profile"><span class="link-collapse">My Profile</span></a>
                                 </li>
                                 <li>
-                                    <a href="#edit">
-                                        <span class="link-collapse">Edit Profile</span>
-                                    </a>
+                                    <a href="#edit"><span class="link-collapse">Edit Profile</span></a>
                                 </li>
                                 <li>
-                                    <a href="#settings">
-                                        <span class="link-collapse">Settings</span>
-                                    </a>
+                                    <a href="#settings"><span class="link-collapse">Settings</span></a>
                                 </li>
                             </ul>
                         </div>
