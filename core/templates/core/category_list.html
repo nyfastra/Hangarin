@@ -1,6 +1,17 @@
 {% extends 'core/base.html' %}
 {% block content %}
 <h2>Categories</h2>
+
+<form method="get" style="display: flex; gap: 10px; margin-bottom: 15px;">
+    <input type="text" name="q" placeholder="Search categories..." value="{{ request.GET.q }}">
+    <select name="sort" onchange="this.form.submit()">
+        <option value="">-- Sort By --</option>
+        <option value="name" {% if request.GET.sort == 'name' %}selected{% endif %}>Name (A-Z)</option>
+        <option value="-name" {% if request.GET.sort == '-name' %}selected{% endif %}>Name (Z-A)</option>
+    </select>
+    <button type="submit" class="btn">Filter</button>
+</form>
+
 <a href="{% url 'category-create' %}" class="btn">+ Add Category</a>
 <table>
     <tr><th>Name</th><th>Actions</th></tr>

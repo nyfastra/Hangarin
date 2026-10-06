@@ -1,6 +1,17 @@
 {% extends 'core/base.html' %}
 {% block content %}
 <h2>Subtasks</h2>
+
+<form method="get" style="display: flex; gap: 10px; margin-bottom: 15px;">
+    <input type="text" name="q" placeholder="Search subtasks..." value="{{ request.GET.q }}">
+    <select name="sort" onchange="this.form.submit()">
+        <option value="">-- Sort By --</option>
+        <option value="title" {% if request.GET.sort == 'title' %}selected{% endif %}>Title (A-Z)</option>
+        <option value="-title" {% if request.GET.sort == '-title' %}selected{% endif %}>Title (Z-A)</option>
+    </select>
+    <button type="submit" class="btn">Filter</button>
+</form>
+
 <a href="{% url 'subtask-create' %}" class="btn">+ Add Subtask</a>
 <table>
     <tr><th>Title</th><th>Task</th><th>Status</th><th>Actions</th></tr>

@@ -1,6 +1,17 @@
 {% extends 'core/base.html' %}
 {% block content %}
 <h2>Notes</h2>
+
+<form method="get" style="display: flex; gap: 10px; margin-bottom: 15px;">
+    <input type="text" name="q" placeholder="Search notes..." value="{{ request.GET.q }}">
+    <select name="sort" onchange="this.form.submit()">
+        <option value="">-- Sort By --</option>
+        <option value="content" {% if request.GET.sort == 'content' %}selected{% endif %}>Content (A-Z)</option>
+        <option value="-content" {% if request.GET.sort == '-content' %}selected{% endif %}>Content (Z-A)</option>
+    </select>
+    <button type="submit" class="btn">Filter</button>
+</form>
+
 <a href="{% url 'note-create' %}" class="btn">+ Add Note</a>
 <table>
     <tr><th>Content</th><th>Task</th><th>Actions</th></tr>

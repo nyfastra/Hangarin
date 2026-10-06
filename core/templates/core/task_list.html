@@ -1,12 +1,30 @@
 {% extends 'core/base.html' %}
 {% block content %}
 <h2>Tasks</h2>
-<a href="{% url 'task-create' %}" class="btn">+ Add Task</a>
 
-<form method="get" style="margin-top: 15px;">
-    <input type="text" name="q" placeholder="Search tasks..." value="{{ request.GET.q }}">
-    <button type="submit" class="btn">Search</button>
-</form>
+<div style="display: flex; gap: 15px; margin-bottom: 20px;">
+    <!-- Search Form -->
+    <form method="get" style="display: flex; gap: 5px;">
+        <input type="text" name="q" placeholder="Search tasks..." value="{{ request.GET.q }}">
+        {% if request.GET.sort %}<input type="hidden" name="sort" value="{{ request.GET.sort }}">{% endif %}
+        <button type="submit" class="btn">Search</button>
+    </form>
+
+    <!-- Sorting Dropdown -->
+    <form method="get" style="display: flex; gap: 5px;">
+        {% if request.GET.q %}<input type="hidden" name="q" value="{{ request.GET.q }}">{% endif %}
+        <select name="sort" onchange="this.form.submit()">
+            <option value="">-- Sort By --</option>
+            <option value="title" {% if request.GET.sort == 'title' %}selected{% endif %}>Title (A-Z)</option>
+            <option value="-title" {% if request.GET.sort == '-title' %}selected{% endif %}>Title (Z-A)</option>
+            <option value="due_date" {% if request.GET.sort == 'due_date' %}selected{% endif %}>Due Date (Earliest)</option>
+            <option value="-due_date" {% if request.GET.sort == '-due_date' %}selected{% endif %}>Due Date (Latest)</option>
+            <option value="status" {% if request.GET.sort == 'status' %}selected{% endif %}>Status</option>
+        </select>
+    </form>
+</div>
+
+<a href="{% url 'task-create' %}" class="btn">+ Add Task</a>
 
 <table>
     <tr>
