@@ -135,3 +135,5 @@ SOCIALACCOUNT_EMAIL_REQUIRED = False
 
 # Link custom social adapter
 SOCIALACCOUNT_ADAPTER = 'core.adapters.CustomSocialAccountAdapter'
+
+SOCIALACCOUNT_LOGIN_ON_GET = True
