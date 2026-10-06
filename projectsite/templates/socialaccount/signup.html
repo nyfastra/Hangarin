@@ -1,0 +1,64 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Complete Sign Up | Hangarin</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" />
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 1rem;
+            background-color: #f8f9fc;
+        }
+
+        .auth-card {
+            max-width: 600px;
+            width: 100%;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <main class="auth-card">
+        <h1 class="h3 mb-3">{% trans "Complete your sign up" %}</h1>
+        <p class="text-muted mb-4">
+            {% blocktrans with provider_name=account.get_provider.name %}
+                You are signing up with your {{ provider_name }} account. Please complete the form below.
+            {% endblocktrans %}
+        </p>
+
+        <form method="post" action="{% url 'socialaccount_signup' %}">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="form-outline mb-4">
+                    {{ field }}
+                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {% for error in field.errors %}
+                        <div class="text-danger small mt-1">{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            {{ redirect_field }}
+            <button type="submit" class="btn btn-primary btn-block">{% trans "Sign Up" %}</button>
+        </form>
+    </main>
+</body>
+</html>
