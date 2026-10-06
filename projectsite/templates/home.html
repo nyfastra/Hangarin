@@ -15,8 +15,8 @@
                         </div>
                         <div class="col-7 d-flex align-items-center">
                             <div class="numbers">
-                                <p class="card-category">Students</p>
-                                <h4 class="card-title">52</h4>
+                                <p class="card-category">Total Tasks</p>
+                                <h4 class="card-title">{{ total_tasks }}</h4>
                             </div>
                         </div>
                     </div>
@@ -30,13 +30,13 @@
                     <div class="row">
                         <div class="col-5">
                             <div class="icon-big text-center">
-                                <i class="la la-bar-chart"></i>
+                                <i class="la la-check-circle"></i>
                             </div>
                         </div>
                         <div class="col-7 d-flex align-items-center">
                             <div class="numbers">
-                                <p class="card-category">Joined This Year</p>
-                                <h4 class="card-title">5</h4>
+                                <p class="card-category">Completed</p>
+                                <h4 class="card-title">{{ completed_tasks }}</h4>
                             </div>
                         </div>
                     </div>
@@ -50,13 +50,13 @@
                     <div class="row">
                         <div class="col-5">
                             <div class="icon-big text-center">
-                                <i class="la la-newspaper-o"></i>
+                                <i class="la la-clock-o"></i>
                             </div>
                         </div>
                         <div class="col-7 d-flex align-items-center">
                             <div class="numbers">
-                                <p class="card-category">Organizations</p>
-                                <h4 class="card-title">12</h4>
+                                <p class="card-category">Pending</p>
+                                <h4 class="card-title">{{ pending_tasks }}</h4>
                             </div>
                         </div>
                     </div>
@@ -70,13 +70,13 @@
                     <div class="row">
                         <div class="col-5">
                             <div class="icon-big text-center">
-                                <i class="la la-check-circle"></i>
+                                <i class="la la-spinner"></i>
                             </div>
                         </div>
                         <div class="col-7 d-flex align-items-center">
                             <div class="numbers">
-                                <p class="card-category">Programs</p>
-                                <h4 class="card-title">10</h4>
+                                <p class="card-category">In Progress</p>
+                                <h4 class="card-title">{{ in_progress_tasks }}</h4>
                             </div>
                         </div>
                     </div>
@@ -89,11 +89,11 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Page Title</h4>
-                    <p class="card-category">Page Subtitle</p>
+                    <div class="card-title">Hangarin</div>
+                    <div class="card-category">Task & To_Do Manager</div>
                 </div>
                 <div class="card-body">
-                    <p>Hello, World</p>
+                    <p>Hello po. Grabe, 12 hours ako nasa harap ng laptop.</p>
                 </div>
             </div>
         </div>

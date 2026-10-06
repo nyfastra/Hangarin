@@ -1,90 +1,86 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="content">
-        <div class="container-fluid">
-            <h4 class="page-title">Tasks</h4>
+    <h4 class="page-title">Tasks</h4>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">List of Tasks</div>
-                            <div class="card-category">Page Subtitle</div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">List of Tasks</div>
+                    <div class="card-category">Page Subtitle</div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <form class="navbar-left navbar-form nav-search mr-md-3" action="{% url 'task-list' %}">
+                                <div class="input-group">
+                                    <input type="text" placeholder="Search ..." class="form-control" name="q" value="{{ request.GET.q }}" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="la la-search search-icon"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-
-                        <div class="card-body">
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <form class="navbar-left navbar-form nav-search mr-md-3" action="{% url 'task-list' %}">
-                                        <div class="input-group">
-                                            <input type="text" placeholder="Search ..." class="form-control" name="q" value="{{ request.GET.q }}" />
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">
-                                                    <i class="la la-search search-icon"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <a href="{% url 'task-add' %}" class="btn btn-success btn-rounded">Add Task</a>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-auto">
-                                    <form method="get" class="form-inline">
-                                        <label for="smallSelect" class="mr-2">Sort by</label>
-                                        <select class="form-control form-control-sm mr-2" id="smallSelect" name="sort_by">
-                                            <option value="deadline" {% if request.GET.sort_by == "deadline" %}selected{% endif %}>Deadline</option>
-                                            <option value="title" {% if request.GET.sort_by == "title" %}selected{% endif %}>Title</option>
-                                            <option value="status" {% if request.GET.sort_by == "status" %}selected{% endif %}>Status</option>
-                                        </select>
-                                        <button type="submit" class="btn btn-primary btn-sm btn-rounded">Sort</button>
-                                    </form>
-                                </div>
-                            </div>
-
-                            <table class="table table-striped mt-3">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Title</th>
-                                        <th scope="col">Description</th>
-                                        <th scope="col">Deadline</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Category</th>
-                                        <th scope="col">Priority</th>
-                                        <th scope="col">Actions</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    {% for object in object_list %}
-                                        <tr>
-                                            <td>{{ object.title }}</td>
-                                            <td>{{ object.description }}</td>
-                                            <td>{{ object.deadline }}</td>
-                                            <td>{{ object.get_status_display }}</td>
-                                            <td>{{ object.category }}</td>
-                                            <td>{{ object.priority }}</td>
-                                            <td>
-                                                <a href="{% url 'task-update' object.id %}">Edit</a>
-                                                <a href="{% url 'task-delete' object.id %}" class="text-danger">Delete</a>
-                                            </td>
-                                        </tr>
-                                    {% empty %}
-                                        <tr>
-                                            <td colspan="7" style="text-align: center">
-                                                <p class="text-sm font-weight-bold mb-0">No Records Found.</p>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                            {% include 'includes/pagination.html' %}
+                        <div class="col-md-6 text-right">
+                            <a href="{% url 'task-add' %}" class="btn btn-success btn-rounded">Add Task</a>
                         </div>
                     </div>
+
+                    <div class="row mb-3">
+                        <div class="col-auto">
+                            <form method="get" class="form-inline">
+                                <label for="smallSelect" class="mr-2">Sort by</label>
+                                <select class="form-control form-control-sm mr-2" id="smallSelect" name="sort_by">
+                                    <option value="deadline" {% if request.GET.sort_by == "deadline" %}selected{% endif %}>Deadline</option>
+                                    <option value="title" {% if request.GET.sort_by == "title" %}selected{% endif %}>Title</option>
+                                    <option value="status" {% if request.GET.sort_by == "status" %}selected{% endif %}>Status</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary btn-sm btn-rounded">Sort</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <table class="table table-striped mt-3">
+                        <thead>
+                            <tr>
+                                <th scope="col">Title</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Deadline</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Priority</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for object in object_list %}
+                                <tr>
+                                    <td>{{ object.title }}</td>
+                                    <td>{{ object.description }}</td>
+                                    <td>{{ object.deadline }}</td>
+                                    <td>{{ object.get_status_display }}</td>
+                                    <td>{{ object.category }}</td>
+                                    <td>{{ object.priority }}</td>
+                                    <td>
+                                        <a href="{% url 'task-update' object.id %}">Edit</a>
+                                        <a href="{% url 'task-delete' object.id %}" class="text-danger">Delete</a>
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="7" style="text-align: center">
+                                        <p class="text-sm font-weight-bold mb-0">No Records Found.</p>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% include 'includes/pagination.html' %}
                 </div>
             </div>
         </div>
