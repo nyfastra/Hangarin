@@ -12,28 +12,26 @@
                             <div class="card-title">List of Categories</div>
                             <div class="card-category">Page Subtitle</div>
                         </div>
-                        <br />
-                        <div class="col-md-12 row">
-                            <div class="col-md-6">
-                                <form class="navbar-left navbar-form nav-search mr-md-3" action="{% url 'category-list' %}">
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Search ..." class="form-control" name="q" />
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">
-                                                <i class="la la-search search-icon"></i>
-                                            </span>
+
+                        <div class="card-body">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <form class="navbar-left navbar-form nav-search mr-md-3" action="{% url 'category-list' %}">
+                                        <div class="input-group">
+                                            <input type="text" placeholder="Search ..." class="form-control" name="q" value="{{ request.GET.q }}" />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <i class="la la-search search-icon"></i>
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="pull-right">
+                                    </form>
+                                </div>
+                                <div class="col-md-6 text-right">
                                     <a href="{% url 'category-add' %}" class="btn btn-success btn-rounded">Add Category</a>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="card-body">
                             <table class="table table-striped mt-3">
                                 <thead>
                                     <tr>
