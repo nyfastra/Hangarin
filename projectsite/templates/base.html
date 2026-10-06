@@ -1,4 +1,5 @@
 {% load static %}
+{% load socialaccount %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -197,31 +198,32 @@
 				<div class="scrollbar-inner sidebar-wrapper">
 					<div class="user">
 						<div class="photo">
-							{% load socialaccount %}
-
-							{% if request.user.is_authenticated %}
-
-								{% get_social_accounts request.user as accounts %}
-
-								{% if accounts.google %}
-									<img
-										src="{{ accounts.google.0.extra_data.picture }}"
-										alt="user-img"
-										width="36"
-										class="img-circle"
-									>
-								{% else %}
-									<div class="profile-initial">
-										{{ request.user.username|first|upper }}
-									</div>
-								{% endif %}
-
-							{% else %}
-
-								<img src="https://as2.ftcdn.net/v2/jpg/11/70/51/51/1000_F_1170515123_pbaFKKQBwDjVAgXLKxZ6eKJO1egMrr7k.jpg">
-
-							{% endif %}
-						</div>
+                            {% if request.user.is_authenticated %}
+                                {% get_social_accounts request.user as accounts %}
+                                {% if accounts.google %}
+                                    <img
+                                        src="{{ accounts.google.0.extra_data.picture }}"
+                                        alt="user-img"
+                                        width="36"
+                                        class="img-circle"
+                                    >
+                                {% else %}
+                                    <img
+                                        src="{% static 'img/nero.jpg' %}"
+                                        alt="user-img"
+                                        width="36"
+                                        class="img-circle"
+                                    >
+                                {% endif %}
+                            {% else %}
+                                <img
+                                    src="{% static 'img/nero.jpg' %}"
+                                    alt="user-img"
+                                    width="36"
+                                    class="img-circle"
+                                >
+                            {% endif %}
+                        </div>
 						<div class="info">
 							<a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
