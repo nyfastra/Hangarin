@@ -12,6 +12,7 @@ class TaskListView(ListView):
     model = Task
     template_name = 'task_list.html'
     context_object_name = 'tasks'
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -47,6 +48,7 @@ class SubTaskListView(ListView):
     model = SubTask
     template_name = 'subtask_list.html'
     context_object_name = 'subtasks'
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -80,6 +82,7 @@ class CategoryListView(ListView):
     model = Category
     template_name = 'category_list.html'
     context_object_name = 'categories'
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -113,6 +116,7 @@ class PriorityListView(ListView):
     model = Priority
     template_name = 'priority_list.html'
     context_object_name = 'priorities'
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -146,6 +150,7 @@ class NoteListView(ListView):
     model = Note
     template_name = 'note_list.html'
     context_object_name = 'notes'
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = super().get_queryset()

@@ -109,12 +109,12 @@
                                 {% if request.user.is_authenticated and request.user.socialaccount_set.all %}
                                     {% get_social_accounts request.user as accounts %}
                                     {% if accounts.google %}
-                                        <img src="{{ accounts.google.0.extra_data.picture }}" alt="user-img" width="36" class="img-circle">
+                                        <img src="{{ accounts.google.0.extra_data.picture }}" alt="user-img" width="36" height="36" class="img-circle">
                                     {% else %}
-                                        <img src="{% static 'img/nero.jpg' %}" alt="user-img" width="36" class="img-circle">
+                                        <img src="{% static 'img/nero.jpg' %}" alt="user-img" width="36" height="36" class="img-circle">
                                     {% endif %}
                                 {% else %}
-                                    <img src="{% static 'img/nero.jpg' %}" alt="user-img" width="36" class="img-circle">
+                                    <img src="{% static 'img/nero.jpg' %}" alt="user-img" width="36" height="36" class="img-circle">
                                 {% endif %}
                             </a>
                             <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -125,27 +125,27 @@
                                                 {% if request.user.is_authenticated and request.user.socialaccount_set.all %}
                                                     {% get_social_accounts request.user as accounts %}
                                                     {% if accounts.google %}
-                                                        <img src="{{ accounts.google.0.extra_data.picture }}" alt="image profile" class="avatar-img rounded">
+                                                        <img src="{{ accounts.google.0.extra_data.picture }}" alt="image profile" class="avatar-img rounded" style="width: 50px; height: 50px; object-fit: cover;">
                                                     {% else %}
-                                                        <img src="{% static 'img/nero.jpg' %}" alt="image profile" class="avatar-img rounded">
+                                                        <img src="{% static 'img/nero.jpg' %}" alt="image profile" class="avatar-img rounded" style="width: 50px; height: 50px; object-fit: cover;">
                                                     {% endif %}
                                                 {% else %}
-                                                    <img src="{% static 'img/nero.jpg' %}" alt="image profile" class="avatar-img rounded">
+                                                    <img src="{% static 'img/nero.jpg' %}" alt="image profile" class="avatar-img rounded" style="width: 50px; height: 50px; object-fit: cover;">
                                                 {% endif %}
                                             </div>
                                             <div class="u-text">
                                                 <h4>
                                                     {% if request.user.is_authenticated %}
-                                                        {{ request.user.first_name|default:request.user.username }}
+                                                        {{ request.user.get_full_name|default:request.user.username }}
                                                     {% else %}
-                                                        Guest User
+                                                        Administrator
                                                     {% endif %}
                                                 </h4>
                                                 <p class="text-muted">
                                                     {% if request.user.is_authenticated %}
-                                                        {{ request.user.email|default:"No email set" }}
+                                                        {{ request.user.email }}
                                                     {% else %}
-                                                        hello@themekita.com
+                                                        admin@example.com
                                                     {% endif %}
                                                 </p>
                                                 <a href="#" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
@@ -159,7 +159,6 @@
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#">Account Setting</a>
                                     <div class="dropdown-divider"></div>
-                                    
                                     {% if request.user.is_authenticated %}
                                         <a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a>
                                     {% else %}
