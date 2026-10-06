@@ -7,9 +7,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Hangarin Login</title>
-    <!-- Bootstrap + MDB + FontAwesome -->
+    <!-- FontAwesome & Bootstrap 5 CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
     <style>
         body {
             display: flex;
@@ -21,68 +21,130 @@
         }
 
         .auth-card {
-            max-width: 500px;
+            max-width: 480px;
             width: 100%;
             background: #fff;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
             padding: 2.5rem;
+        }
+
+        .nav-pills .nav-link {
+            color: #6c757d;
+            background-color: #f1f3f5;
+            font-weight: 500;
+            border-radius: 6px;
+        }
+
+        .nav-pills .nav-link.active {
+            color: #0d6efd;
+            background-color: #e7f0ff;
+        }
+
+        .btn-social {
+            color: #0d6efd;
+            text-decoration: none;
+            font-size: 1.1rem;
         }
     </style>
 </head>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
 <body>
     <div class="auth-card">
-        <!-- Pills navs -->
-        <ul class="nav nav-pills nav-justified mb-4" id="ex1" role="tablist">
-            <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="tab-login" data-mdb-pill-init href="#pills-login" role="tab"
-                    aria-controls="pills-login" aria-selected="true">Login</a>
+        <!-- Nav Tabs -->
+        <ul class="nav nav-pills nav-justified mb-4" id="pills-tab" role="tablist">
+            <li class="nav-item me-2" role="presentation">
+                <button class="nav-link active w-100" id="tab-login" data-bs-toggle="pill" data-bs-target="#pills-login" type="button" role="tab" aria-controls="pills-login" aria-selected="true">LOGIN</button>
             </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" id="tab-register" data-mdb-pill-init href="#pills-register" role="tab"
-                    aria-controls="pills-register" aria-selected="false">Register</a>
+            <li class="nav-item ms-2" role="presentation">
+                <button class="nav-link w-100" id="tab-register" data-bs-toggle="pill" data-bs-target="#pills-register" type="button" role="tab" aria-controls="pills-register" aria-selected="false">REGISTER</button>
             </li>
         </ul>
 
-        <!-- Pills content -->
-        <div class="tab-content">
-            <!-- Login tab -->
+        <!-- Tab Content -->
+        <div class="tab-content" id="pills-tabContent">
+            <!-- Login Tab -->
             <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
                 <form method="post" action="{% url 'account_login' %}">
                     {% csrf_token %}
                     <div class="text-center mb-3">
-                        <p>Sign in with:</p>
-                        <a href="{% provider_login_url 'google' %}" class="btn btn-link btn-floating mx-1">
-                            <i class="fab fa-google"></i>
-                        </a>
-                        <a href="{% provider_login_url 'github' %}" class="btn btn-link btn-floating mx-1">
-                            <i class="fab fa-github"></i>
-                        </a>
+                        <p class="text-secondary mb-2" style="font-size: 0.95rem;">Sign in with:</p>
+                        <a href="{% provider_login_url 'google' %}" class="btn-social mx-2"><i class="fab fa-google"></i></a>
+                        <a href="{% provider_login_url 'github' %}" class="btn-social mx-2"><i class="fab fa-github"></i></a>
                     </div>
 
-                    <p class="text-center">or:</p>
+                    <p class="text-center text-muted small mb-3">or:</p>
 
-                    <!-- Email / Username -->
-                    <div data-mdb-input-init class="form-outline mb-4">
-                        <input type="text" name="login" id="id_login" class="form-control" required />
-                        <label class="form-label" for="id_login">Email or Username</label>
+                    <!-- Username / Email -->
+                    <div class="mb-3">
+                        <input type="text" name="login" id="id_login" class="form-control py-2" placeholder="Email or Username" required />
                     </div>
 
                     <!-- Password -->
-                    <div data-mdb-input-init class="form-outline mb-4">
-                        <input type="password" name="password" id="id_password" class="form-control" required />
-                        <label class="form-label" for="id_password">Password</label>
+                    <div class="mb-3">
+                        <input type="password" name="password" id="id_password" class="form-control py-2" placeholder="Password" required />
                     </div>
 
-                    <!-- Remember me & Forgot Password -->
-                    <div class="row mb-4">
-                        <div class="col-md-6 d-flex justify-content-start">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="loginCheck" checked />
-                                <label class="form-check-label" for="loginCheck"> Remember me </label>
-                            </div>
+                    <!-- Remember Me / Forgot Password -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="loginCheck" checked />
+                            <label class="form-check-label text-secondary small" for="loginCheck"> Remember me </label>
                         </div>
-                        <div class="col-md-6 text-end">
-                            <a href="{% url 'account_reset_password' %}">Forgot password?</a>
+                        <div>
+                            <a href="{% url 'account_reset_password' %}" class="text-decoration-none small">Forgot password?</a>
+                        </div>
+                    </div>
+
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger py-2" role="alert">
+                        {% for error in form.non_field_errors %}
+                        <p{% if forloop.last %} class="mb-0 small" {% endif %}>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold text-uppercase" style="letter-spacing: 0.5px;">SIGN IN</button>
+                </form>
+            </div>
+
+            <!-- Register Tab -->
+            <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
+                <form method="post" action="{% url 'account_signup' %}">
+                    {% csrf_token %}
+                    <div class="text-center mb-3">
+                        <p class="text-secondary mb-2" style="font-size: 0.95rem;">Sign up with:</p>
+                        <a href="{% provider_login_url 'google' %}" class="btn-social mx-2"><i class="fab fa-google"></i></a>
+                        <a href="{% provider_login_url 'github' %}" class="btn-social mx-2"><i class="fab fa-github"></i></a>
+                    </div>
+
+                    <p class="text-center text-muted small mb-3">or:</p>
+
+                    <div class="mb-3">
+                        <input type="text" name="username" id="registerUsername" class="form-control py-2" placeholder="Username" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="email" name="email" id="registerEmail" class="form-control py-2" placeholder="Email" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="password" name="password1" id="registerPassword" class="form-control py-2" placeholder="Password" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="password" name="password2" id="registerRepeatPassword" class="form-control py-2" placeholder="Repeat password" required />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold text-uppercase" style="letter-spacing: 0.5px;">REGISTER</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
