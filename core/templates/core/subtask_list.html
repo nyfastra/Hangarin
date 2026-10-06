@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<h2>Subtasks</h2>
+<a href="{% url 'subtask-create' %}" class="btn">+ Add Subtask</a>
+<table>
+    <tr><th>Title</th><th>Task</th><th>Status</th><th>Actions</th></tr>
+    {% for subtask in subtasks %}
+    <tr>
+        <td>{{ subtask.title }}</td>
+        <td>{{ subtask.task }}</td>
+        <td>{{ subtask.status }}</td>
+        <td>
+            <a href="{% url 'subtask-update' subtask.pk %}">Edit</a> |
+            <a href="{% url 'subtask-delete' subtask.pk %}">Delete</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="4">No subtasks found.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}
