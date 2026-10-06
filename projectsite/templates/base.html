@@ -74,7 +74,18 @@
                                         </a>
                                         <a href="#">
                                             <div class="notif-img"> 
-                                                <img src="assets/img/profile2.jpg" alt="Img Profile">
+                                                {% if request.user.is_authenticated and request.user.socialaccount_set.all %}
+                                                    {% get_social_accounts request.user as accounts %}
+                                                    {% if accounts.google %}
+                                                        <img src="{{ accounts.google.0.extra_data.picture }}" alt="Img Profile">
+                                                    {% elif accounts.github %}
+                                                        <img src="{{ accounts.github.0.extra_data.avatar_url }}" alt="Img Profile">
+                                                    {% else %}
+                                                        <img src="{% static 'img/nero.jpg' %}" alt="Img Profile">
+                                                    {% endif %}
+                                                {% else %}
+                                                    <img src="{% static 'img/nero.jpg' %}" alt="Img Profile">
+                                                {% endif %}
                                             </div>
                                             <div class="notif-content">
                                                 <span class="block">Sky send messages to you</span>
@@ -114,30 +125,30 @@
                                     <img src="{% static 'img/nero.jpg' %}" alt="user-img" width="36" height="36" class="img-circle">
                                 {% endif %}
                             </a>
-                            <ul class="dropdown-menu dropdown-user animated fadeIn">
+                            <ul class="dropdown-menu dropdown-user animated fadeIn" style="min-width: 280px;">
                                 <div class="dropdown-user-scroll scrollbar-outer">
                                     <li>
-                                        <div class="user-box">
-                                            <div class="avatar-lg" style="width: 80px; height: 80px;">
+                                        <div class="user-box d-flex align-items-center">
+                                            <div class="avatar-lg flex-shrink-0 mr-3" style="width: 70px; height: 70px;">
                                                 {% if request.user.is_authenticated and request.user.socialaccount_set.all %}
                                                     {% get_social_accounts request.user as accounts %}
                                                     {% if accounts.google %}
-                                                        <img src="{{ accounts.google.0.extra_data.picture }}" alt="image profile" class="avatar-img rounded" style="width: 80px; height: 80px; object-fit: cover;">
+                                                        <img src="{{ accounts.google.0.extra_data.picture }}" alt="image profile" class="avatar-img rounded" style="width: 70px; height: 70px; object-fit: cover;">
                                                     {% elif accounts.github %}
-                                                        <img src="{{ accounts.github.0.extra_data.avatar_url }}" alt="image profile" class="avatar-img rounded" style="width: 80px; height: 80px; object-fit: cover;">
+                                                        <img src="{{ accounts.github.0.extra_data.avatar_url }}" alt="image profile" class="avatar-img rounded" style="width: 70px; height: 70px; object-fit: cover;">
                                                     {% else %}
-                                                        <img src="{% static 'img/nero.jpg' %}" alt="image profile" class="avatar-img rounded" style="width: 80px; height: 80px; object-fit: cover;">
+                                                        <img src="{% static 'img/nero.jpg' %}" alt="image profile" class="avatar-img rounded" style="width: 70px; height: 70px; object-fit: cover;">
                                                     {% endif %}
                                                 {% else %}
-                                                    <img src="{% static 'img/nero.jpg' %}" alt="image profile" class="avatar-img rounded" style="width: 80px; height: 80px; object-fit: cover;">
+                                                    <img src="{% static 'img/nero.jpg' %}" alt="image profile" class="avatar-img rounded" style="width: 70px; height: 70px; object-fit: cover;">
                                                 {% endif %}
                                             </div>
-                                            <div class="u-text">
+                                            <div class="u-text" style="overflow: hidden; text-overflow: ellipsis; word-break: break-all;">
                                                 {% if request.user.is_authenticated %}
-                                                    <h4>{{ request.user.get_full_name|default:request.user.first_name|default:request.user.username }}</h4>
-                                                    <p class="text-muted">{{ request.user.email }}</p>
+                                                    <h4 style="margin-bottom: 2px; font-size: 15px; word-break: break-word;">{{ request.user.get_full_name|default:request.user.first_name|default:request.user.username }}</h4>
+                                                    <p class="text-muted" style="margin-bottom: 8px; font-size: 12px; word-break: break-all;">{{ request.user.email }}</p>
                                                 {% else %}
-                                                    <p class="text-muted" style="margin-bottom: 8px;">hello@themekita.com</p>
+                                                    <p class="text-muted" style="margin-bottom: 8px; font-size: 12px; word-break: break-all;">hello@themekita.com</p>
                                                 {% endif %}
                                                 <a href="#" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
                                             </div>
@@ -252,8 +263,37 @@
         </div>
 
         <div class="main-panel">
-            {% block content %}
-            {% endblock %}
+            <div class="content">
+                {% block content %}
+                {% endblock %}
+            </div>
+            <!-- FOOTER SECTION -->
+            <footer class="footer">
+                <div class="container-fluid">
+                    <nav class="pull-left">
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    ThemeKita
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Help
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Licenses
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="copyright ml-auto">
+                        2018, made with <i class="la la-heart heart text-danger"></i> by <a href="#">ThemeKita</a>
+                    </div>				
+                </div>
+            </footer>
         </div>
     </div>
 </body>

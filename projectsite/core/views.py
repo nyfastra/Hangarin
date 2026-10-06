@@ -49,7 +49,7 @@ class TaskUpdateView(UpdateView):
 
 class TaskDeleteView(DeleteView):
     model = Task
-    template_name = 'task_confirm_delete.html'
+    template_name = 'task_del.html'
     success_url = reverse_lazy('task-list')
 
 
@@ -83,7 +83,7 @@ class SubTaskUpdateView(UpdateView):
 
 class SubTaskDeleteView(DeleteView):
     model = SubTask
-    template_name = 'subtask_confirm_delete.html'
+    template_name = 'subtask_del.html'
     success_url = reverse_lazy('subtask-list')
 
 
@@ -117,7 +117,7 @@ class CategoryUpdateView(UpdateView):
 
 class CategoryDeleteView(DeleteView):
     model = Category
-    template_name = 'category_confirm_delete.html'
+    template_name = 'category_del.html'
     success_url = reverse_lazy('category-list')
 
 
@@ -151,7 +151,7 @@ class PriorityUpdateView(UpdateView):
 
 class PriorityDeleteView(DeleteView):
     model = Priority
-    template_name = 'priority_confirm_delete.html'
+    template_name = 'priority_del.html'
     success_url = reverse_lazy('priority-list')
 
 
@@ -185,5 +185,5 @@ class NoteUpdateView(UpdateView):
 
 class NoteDeleteView(DeleteView):
     model = Note
-    template_name = 'note_confirm_delete.html'
+    template_name = 'note_del.html'
     success_url = reverse_lazy('note-list')

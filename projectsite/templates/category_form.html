@@ -1,7 +1,10 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
 <div class="content">
     <div class="container-fluid">
-        <h4 class="page-title">Categories</h4>
+        <h4 class="page-title">Home</h4>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -11,13 +14,11 @@
                     </div>
                     <div class="col-md-6">
                         <div class="card-body">
-                            <form class="" action="" method="post" novalidate>
+                            <form action="" method="post" novalidate>
                                 {% csrf_token %}
                                 {% include 'includes/form.html' %}
-                                <div class="form-group">
-                                    <div class="col-md-12 col-sm-3">
-                                        <button type="submit" class="btn btn-primary btn-rounded">Submit</button>
-                                    </div>
+                                <div class="form-group pl-0">
+                                    <button type="submit" class="btn btn-primary btn-rounded">Submit</button>
                                 </div>
                             </form>
                         </div>
