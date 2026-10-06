@@ -25,15 +25,35 @@ class TaskListView(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
                 Q(title__icontains=query) | Q(description__icontains=query)
             )
+
+        status = self.request.GET.get('status')
+        if status:
+            queryset = queryset.filter(status=status)
+
+        priority = self.request.GET.get('priority')
+        if priority:
+            queryset = queryset.filter(priority_id=priority)
+
+        category = self.request.GET.get('category')
+        if category:
+            queryset = queryset.filter(category_id=category)
+
         sort_by = self.request.GET.get('sort')
         if sort_by in ['title', '-title', 'due_date', '-due_date', 'priority', 'status']:
             queryset = queryset.order_by(sort_by)
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        context['priorities'] = Priority.objects.all()
+        return context
 
 class TaskCreateView(CreateView):
     model = Task
@@ -67,7 +87,11 @@ class SubTaskListView(ListView):
             queryset = queryset.filter(
                 Q(title__icontains=query) | Q(parent_task__title__icontains=query)
             )
-            
+
+        status = self.request.GET.get('status')
+        if status:
+            queryset = queryset.filter(status=status)
+
         sort_by = self.request.GET.get('sort')
         if sort_by in ['title', '-title', 'status', '-status']:
             queryset = queryset.order_by(sort_by)
@@ -167,13 +191,20 @@ class NoteListView(ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().select_related('task')
+
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(Q(content__icontains=query))
+
+        created_at = self.request.GET.get('created_at')
+        if created_at:
+            queryset = queryset.filter(created_at__date=created_at)
+
         sort_by = self.request.GET.get('sort')
         if sort_by in ['content', '-content']:
             queryset = queryset.order_by(sort_by)
+
         return queryset
 
 class NoteCreateView(CreateView):

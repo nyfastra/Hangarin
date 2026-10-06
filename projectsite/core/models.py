@@ -10,7 +10,7 @@ class BaseModel(models.Model):
 
 
 class Priority(BaseModel):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=255)
 
     class Meta:
         verbose_name = "Priority"
@@ -21,7 +21,7 @@ class Priority(BaseModel):
 
 
 class Category(BaseModel):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=255)
 
     class Meta:
         verbose_name = "Category"

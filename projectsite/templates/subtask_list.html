@@ -12,23 +12,41 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <form class="navbar-left navbar-form nav-search mr-md-3" action="{% url 'subtask-list' %}">
-                                <div class="input-group">
-                                    <input type="text" placeholder="Search ..." class="form-control" name="q" value="{{ request.GET.q }}" />
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">
-                                            <i class="la la-search search-icon"></i>
-                                        </span>
-                                    </div>
+                    <!-- Unified Search, Filter, and Sort Bar -->
+                    <form method="get" action="{% url 'subtask-list' %}" class="row mb-3 align-items-center">
+                        <!-- Search Input -->
+                        <div class="col-md-4 mb-2">
+                            <div class="input-group">
+                                <input type="text" placeholder="Search title or parent task..." class="form-control" name="q" value="{{ request.GET.q }}" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="la la-search search-icon"></i>
+                                    </span>
                                 </div>
-                            </form>
+                            </div>
                         </div>
-                        <div class="col-md-6 text-right">
-                            <a href="{% url 'subtask-add' %}" class="btn btn-success btn-rounded">Add SubTask</a>
+
+                        <!-- Status Filter Dropdown -->
+                        <div class="col-md-3 mb-2">
+                            <select name="status" class="form-control" onchange="this.form.submit()">
+                                <option value="">All Statuses</option>
+                                <option value="Pending" {% if request.GET.status == "Pending" %}selected{% endif %}>Pending</option>
+                                <option value="In Progress" {% if request.GET.status == "In Progress" %}selected{% endif %}>In Progress</option>
+                                <option value="Completed" {% if request.GET.status == "Completed" %}selected{% endif %}>Completed</option>
+                            </select>
                         </div>
-                    </div>
+
+                        <!-- Sort By & Action Button -->
+                        <div class="col-md-5 text-right mb-2 d-flex align-items-center justify-content-end">
+                            <select class="form-control mr-2" name="sort" onchange="this.form.submit()">
+                                <option value="">Sort by</option>
+                                <option value="title" {% if request.GET.sort == "title" %}selected{% endif %}>Title (A-Z)</option>
+                                <option value="-title" {% if request.GET.sort == "-title" %}selected{% endif %}>Title (Z-A)</option>
+                                <option value="status" {% if request.GET.sort == "status" %}selected{% endif %}>Status</option>
+                            </select>
+                            <a href="{% url 'subtask-add' %}" class="btn btn-success btn-rounded text-nowrap">Add SubTask</a>
+                        </div>
+                    </form>
 
                     <table class="table table-striped mt-3">
                         <thead>
@@ -41,7 +59,7 @@
                         </thead>
 
                         <tbody>
-                            {% for object in object_list %}
+                            {% for object in subtasks %}
                                 <tr>
                                     <td>{{ object.parent_task.title }}</td>
                                     <td>{{ object.title }}</td>

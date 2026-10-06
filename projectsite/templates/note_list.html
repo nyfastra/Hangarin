@@ -12,38 +12,50 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <form class="navbar-left navbar-form nav-search mr-md-3" action="{% url 'note-list' %}">
-                                <div class="input-group">
-                                    <input type="text" placeholder="Search ..." class="form-control" name="q" value="{{ request.GET.q }}" />
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">
-                                            <i class="la la-search search-icon"></i>
-                                        </span>
-                                    </div>
+                    <!-- Unified Search, Date Filter, and Action Bar -->
+                    <form method="get" action="{% url 'note-list' %}" class="row mb-3 align-items-center">
+                        <!-- Search Input -->
+                        <div class="col-md-4 mb-2">
+                            <div class="input-group">
+                                <input type="text" placeholder="Search note content..." class="form-control" name="q" value="{{ request.GET.q }}" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="la la-search search-icon"></i>
+                                    </span>
                                 </div>
-                            </form>
+                            </div>
                         </div>
-                        <div class="col-md-6 text-right">
-                            <a href="{% url 'note-add' %}" class="btn btn-success btn-rounded">Add Note</a>
+
+                        <!-- Date Filter Input -->
+                        <div class="col-md-3 mb-2">
+                            <input type="date" name="created_at" class="form-control" value="{{ request.GET.created_at }}" onchange="this.form.submit()" />
                         </div>
-                    </div>
+
+                        <!-- Clear Filter & Action Button -->
+                        <div class="col-md-5 text-right mb-2 d-flex align-items-center justify-content-end">
+                            {% if request.GET.created_at or request.GET.q %}
+                                <a href="{% url 'note-list' %}" class="btn btn-outline-secondary btn-sm mr-2 text-nowrap">Clear Filters</a>
+                            {% endif %}
+                            <a href="{% url 'note-add' %}" class="btn btn-success btn-rounded text-nowrap">Add Note</a>
+                        </div>
+                    </form>
 
                     <table class="table table-striped mt-3">
                         <thead>
                             <tr>
                                 <th scope="col">Task</th>
                                 <th scope="col">Content</th>
+                                <th scope="col">Created At</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            {% for object in object_list %}
+                            {% for object in notes %}
                                 <tr>
-                                    <td>{{ object.task }}</td>
+                                    <td>{{ object.task.title }}</td>
                                     <td>{{ object.content }}</td>
+                                    <td>{{ object.created_at|date:"M d, Y H:i" }}</td>
                                     <td>
                                         <a href="{% url 'note-update' object.id %}">Edit</a>
                                         <a href="{% url 'note-delete' object.id %}" class="text-danger">Delete</a>
@@ -51,7 +63,7 @@
                                 </tr>
                             {% empty %}
                                 <tr>
-                                    <td colspan="3" style="text-align: center">
+                                    <td colspan="4" style="text-align: center">
                                         <p class="text-sm font-weight-bold mb-0">No Records Found.</p>
                                     </td>
                                 </tr>
