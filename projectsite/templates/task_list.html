@@ -4,72 +4,74 @@
 {% block content %}
 <div class="content">
     <div class="container-fluid">
-        <h4 class="page-title">List of Tasks</h4>
-        <div class="page-subtitle text-muted mb-4">Page Subtitle</div>
-
-        <!-- Top Bar: Search & Add Button -->
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <div class="form-group p-0 m-0" style="max-width: 350px; width: 100%;">
-                <div class="input-group">
-                    <input type="text" class="form-control rounded-pill bg-light border-0" placeholder="Search ...">
-                    <div class="input-group-append">
-                        <span class="input-group-text bg-transparent border-0"><i class="la la-search"></i></span>
+        <h4 class="page-title">Tasks</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">List of Tasks</div>
+                        <div class="card-category">Page Subtitle</div>
                     </div>
-                </div>
-            </div>
-            <a href="{% url 'task-add' %}" class="btn btn-success btn-round px-4" style="border-radius: 20px;">
-                Add Task
-            </a>
-        </div>
+                    <div class="card-body">
+                        <!-- Search & Add Task -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="position-relative" style="max-width: 350px; width: 100%;">
+                                <input type="text" class="form-control rounded-pill bg-light border-0 pr-4" placeholder="Search ...">
+                                <i class="la la-search position-absolute" style="right: 15px; top: 50%; transform: translateY(-50%); color: #aaa;"></i>
+                            </div>
+                            <a href="{% url 'task-add' %}" class="btn btn-success btn-round px-4" style="border-radius: 20px;">
+                                Add Task
+                            </a>
+                        </div>
 
-        <!-- Sort Bar -->
-        <div class="d-flex align-items-center mb-4">
-            <span class="mr-2 text-muted">Sort by</span>
-            <select class="form-control mr-2" style="width: auto; display: inline-block;">
-                <option value="deadline">Deadline</option>
-                <option value="title">Title</option>
-                <option value="status">Status</option>
-            </select>
-            <button type="button" class="btn btn-primary btn-round btn-sm px-3">Sort</button>
-        </div>
+                        <!-- Sort Bar -->
+                        <div class="d-flex align-items-center mb-4">
+                            <span class="mr-2 text-muted">Sort by</span>
+                            <select class="form-control mr-2" style="width: auto; display: inline-block;">
+                                <option value="deadline">Deadline</option>
+                                <option value="title">Title</option>
+                                <option value="status">Status</option>
+                            </select>
+                            <button type="button" class="btn btn-primary btn-round btn-sm px-3">Sort</button>
+                        </div>
 
-        <!-- Table -->
-        <div class="card border-0 shadow-none">
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr class="text-muted border-0">
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Deadline</th>
-                                <th>Status</th>
-                                <th>Category</th>
-                                <th>Priority</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for task in object_list %}
-                            <tr>
-                                <td>{{ task.title }}</td>
-                                <td>{{ task.description }}</td>
-                                <td>{{ task.deadline }}</td>
-                                <td>{{ task.status }}</td>
-                                <td>{{ task.category }}</td>
-                                <td>{{ task.priority }}</td>
-                                <td>
-                                    <a href="{% url 'task-update' task.id %}" class="text-primary d-block">Edit</a>
-                                    <a href="{% url 'task-delete' task.id %}" class="text-danger d-block">Delete</a>
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="7" class="text-center text-muted">No tasks found.</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                        <!-- Table -->
+                        <div class="table-responsive">
+                            <table class="table table-striped align-items-center">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th>Deadline</th>
+                                        <th>Status</th>
+                                        <th>Category</th>
+                                        <th>Priority</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for task in object_list %}
+                                    <tr>
+                                        <td>{{ task.title }}</td>
+                                        <td>{{ task.description }}</td>
+                                        <td>{{ task.deadline }}</td>
+                                        <td>{{ task.status }}</td>
+                                        <td>{{ task.category }}</td>
+                                        <td>{{ task.priority }}</td>
+                                        <td>
+                                            <a href="{% url 'task-update' task.id %}" class="text-primary mr-1">Edit</a>
+                                            <a href="{% url 'task-delete' task.id %}" class="text-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="7" class="text-center text-muted">No tasks found.</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
