@@ -1,4 +1,4 @@
-{% extends 'core/base.html' %}
+{% extends 'base.html' %}
 {% block content %}
 <h2>{% if object %}Edit{% else %}Create{% endif %} Subtask</h2>
 <form method="post">{% csrf_token %}{{ form.as_p }}<button type="submit" class="btn">Save</button></form>
