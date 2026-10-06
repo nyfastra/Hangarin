@@ -5,7 +5,6 @@ import random
 
 from core.models import Priority, Category, Task, SubTask, Note
 
-
 class Command(BaseCommand):
     help = "Populate database with initial Categories, Priorities, and fake data."
 
