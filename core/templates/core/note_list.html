@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+{% block content %}
+<h2>Notes</h2>
+<a href="{% url 'note-create' %}" class="btn">+ Add Note</a>
+<table>
+    <tr><th>Content</th><th>Task</th><th>Actions</th></tr>
+    {% for note in notes %}
+    <tr>
+        <td>{{ note.content }}</td>
+        <td>{{ note.task }}</td>
+        <td>
+            <a href="{% url 'note-update' note.pk %}">Edit</a> |
+            <a href="{% url 'note-delete' note.pk %}">Delete</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="3">No notes found.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}
