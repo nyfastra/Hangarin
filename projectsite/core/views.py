@@ -1,4 +1,5 @@
 from django.db.models import Q
+from django import forms
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .models import Task, SubTask, Category, Priority, Note
@@ -57,15 +58,40 @@ class TaskListView(ListView):
 
 class TaskCreateView(CreateView):
     model = Task
-    fields = '__all__'
+    fields = ['title', 'description', 'deadline', 'status', 'category', 'priority']
     template_name = 'task_form.html'
-    success_url = reverse_lazy('task-list')
+    success_url = '/tasks/'
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['deadline'].widget = forms.DateTimeInput(
+            attrs={
+                'class': 'form-control',
+                'type': 'datetime-local'
+            },
+            format='%Y-%m-%dT%H:%M'
+        )
+        return form
+
 
 class TaskUpdateView(UpdateView):
     model = Task
-    fields = '__all__'
+    fields = ['title', 'description', 'deadline', 'status', 'category', 'priority']
     template_name = 'task_form.html'
-    success_url = reverse_lazy('task-list')
+    success_url = '/tasks/'
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['deadline'].widget = forms.DateTimeInput(
+            attrs={
+                'class': 'form-control',
+                'type': 'datetime-local'
+            },
+            format='%Y-%m-%dT%H:%M'
+        )
+        if self.object and self.object.deadline:
+            form.initial['deadline'] = self.object.deadline.strftime('%Y-%m-%dT%H:%M')
+        return form
 
 class TaskDeleteView(DeleteView):
     model = Task
